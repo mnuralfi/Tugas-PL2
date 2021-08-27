@@ -1,10 +1,10 @@
-<?php 
-    include 'koneksi.php';
-    $db     = new Database();
-    $con    = $db->Connect();
-    $id     = $_GET['id'];
+<?php
 
-    mysqli_query($con,"Delete from mahasiswa where id='$id'");
-    header("location:latihan1.php");
+	include 'koneksi.php';
+	$db = new Database();
+	$con = $db->Connect();
+
+	$query = mysqli_query($con, "delete from mahasiswa where id = '".$_GET['id']."'");
+	header("location:index.php?id=".base64_encode(1));
 
 ?>
