@@ -1,18 +1,25 @@
-<h1>Edit Mahasiswa</h2>
-<a href="latihan1.php"><span>< Kembali</span></a>
-<br></br>
+<h1>Edit Mahasiswa</h1>
 <?php
-    include 'koneksi.php';
-    $db     = new Database();
-    $con    = $db->Connect();
-    $id     = $_GET['id'];
-    $data   = mysqli_query($con,"Select * from mahasiswa where id='$id'");
-    while($d = mysqli_fetch_array($data)){
+
+	include 'koneksi.php';
+	$db = new Database();
+	$con = $db->Connect();
+
+	if (isset($_POST['proses'])) {
+		$query = mysqli_query($con, "update mahasiswa set npm = '".$_POST['npm']."', nama = '".$_POST['nama']."' where id = '".$_GET['id']."'
+		");
+		header("location:index.php?id=".base64_encode(1));
+	}
+
+	$query = mysqli_query($con, "SELECT * FROM mahasiswa WHERE id = '".$_GET['id']."'");
+	while ($data = mysqli_fetch_array($query)) {
+
 ?>
-    <form action="update.php" method="POST">
-        <input type="hidden" name="id" value="<?= $d['id']; ?>">
-        <input type="text" name="npm" value="<?= $d['npm']; ?>">
-        <input type="text" name="nama" value="<?= $d['nama']; ?>">
-        <input type="submit" name="proses" value="Simpan">
-    </form>
-<?php }?>
+
+<form action="" method="POST">
+	<input type="text" name="npm" value="<?php echo $data['npm'] ?>">
+	<input type="text" name="nama" value="<?php echo $data['nama'] ?>">
+	<input type="submit" name="proses" value="Simpan"> <a href="index.php?id=<?php echo base64_encode(1) ?>">Kembali</a>
+</form>
+
+<?php } ?>
